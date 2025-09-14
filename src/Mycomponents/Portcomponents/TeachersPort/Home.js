@@ -1,16 +1,57 @@
 import React, { useContext, useEffect, useState, useRef, useMemo } from 'react'
 import ProfileContext from '../../Context/Profile/ProfileTeacher/ProfileContext'
 import profilepic from '../../../Photos/teac.png';
-
+import styled from 'styled-components';
+export const ProfileContainer = styled.div`
+  height: 70vh;
+  width: 35vw;
+  border: 6px solid #21a0a0;
+  /* border-radius: 10%; */
+  position: relative;
+  margin-left: 2rem;
+  /* Scrollable */
+  overflow-y: auto;
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #21a0a0 #f0f0f0;
+  /* Chrome, Edge, Safari scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;   /* thin vertical */
+    height: 6px;  /* thin horizontal */
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #21a0a0;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+`;
+const ButtonWrapper = styled.div`
+ width: 100%;
+ background: "red";
+ padding-left: 1rem;
+`
+const ImageWrapper = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+`
 const Home = () => {
     const profile_styles = {
         height: '70vh', width: '35vw', border: '6px solid #21A0A0', borderRadius: '10%', position: 'relative',
-        marginLeft: '2rem'
+        marginLeft: '2rem',
+        overflowY: 'auto',
+        scrollbarWidth: 'thin',
+        scrollbarColor: '#21A0A0 #f0f0f0',
     }
 
     const profile_props_styles = {
-        marginTop: '1rem', paddingLeft: '1rem', fontWeight: 'bold', paddingBottom: '1rem',
-        paddingTop: '1rem', fontSize: '1.2rem', color: '#212529'
+        marginTop: '1rem', paddingLeft: '1rem', fontWeight: 'bold',
+        paddingTop: '1rem', fontSize: '1.2rem', color: '#212529',
+        flex: 1,
+
     }
 
     const inputBars = {
@@ -136,11 +177,11 @@ const Home = () => {
                 </div>
 
                 <div className="home" style={{ height: '91vh', position: 'fixed', left: '2.4rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div className="profile" style={profile_styles}>
+                    <ProfileContainer>
                         <div className="profile_photo" style={{ height: '11rem', backgroundColor: '#D0F4EA', borderRadius: '40%', borderBottom: '2px solid #21A0A0' }}>
-                            <div className="img">
-                                {photoUrl && <img style={{ height: '9rem', width: '9rem', borderRadius: '50%', margin: '1rem 0 1rem 10rem' }} src={profilepic} alt='ProfilePhoto' />}
-                            </div>
+                            <ImageWrapper className="img">
+                                {photoUrl && <img style={{ height: '9rem', width: '9rem', borderRadius: '50%' }} src={profilepic} alt='ProfilePhoto' />}
+                            </ImageWrapper>
                         </div>
                         <div className="profile_props" style={profile_props_styles}>
                             <p>Name  : {credentials.name}</p>
@@ -149,8 +190,10 @@ const Home = () => {
                             <p>Subject : {credentials.subject}</p>
                             <p>Teacher_id : {credentials.id}</p>
                         </div>
-                        <button style={{ position: 'absolute', right: '1.5rem', backgroundColor:'#21A0A0'}} type="button" className="btn btn-primary" onClick={handleUpdate}>Update Profile</button>
-                    </div>
+                        <ButtonWrapper>
+                            <button style={{ backgroundColor: '#21A0A0' }} type="button" className="btn btn-primary" onClick={handleUpdate}>Update Profile</button>
+                        </ButtonWrapper>
+                    </ProfileContainer>
                 </div>
             </div>
         </div>

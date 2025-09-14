@@ -20,7 +20,9 @@ const ViewProfile = () => {
     }
 
     const first_styles = {
-        width: '45vw', height: '100vh', marginTop: '5.5rem'
+        width: '45vw',
+        // height: '100vh',
+        marginTop: '5.5rem'
     }
     const profile_props_styles = {
         marginTop: '1rem', paddingLeft: '1rem', fontWeight: 'bold', paddingBottom: '1rem',
@@ -48,7 +50,7 @@ const ViewProfile = () => {
     const [sTcontent, setSTcontent] = useState([]);
     const [loading, setLoading] = useState(false);
     const context = useContext(AccReq);
-    const { status,reqData,getAccessReq, setStatus, createAccessReq, cancelAccessReq } = context
+    const { status, reqData, getAccessReq, setStatus, createAccessReq, cancelAccessReq } = context
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -78,21 +80,21 @@ const ViewProfile = () => {
 
     const [colorSReq, setcolorSReq] = useState('');
     const [sReqtext, setsReqtext] = useState('')
-    const [gpy,setGpy] = useState('');
+    const [gpy, setGpy] = useState('');
     const ref = useRef(null);
     const closeref = useRef(null);
 
-    useEffect(()=>{
-        const handleGoogi = async() =>{
+    useEffect(() => {
+        const handleGoogi = async () => {
             const dell = await getAccessReq(selectedTeacher);
-            if(dell && dell.required_req && dell.required_req.length>0){
+            if (dell && dell.required_req && dell.required_req.length > 0) {
                 setStatus(dell.required_req[0].status);
             } else {
                 setStatus('');
             }
         }
         handleGoogi();
-    },[])
+    }, [])
 
     useEffect(() => {
         if (status === "pending") {
@@ -100,7 +102,7 @@ const ViewProfile = () => {
             setsReqtext('Pending');
             setGpy('Request Sent');
             // console.log('Status', status)
-        } else  {
+        } else {
             setcolorSReq('dark');
             setsReqtext('Send Request');
             setGpy('Send an access request to have an access to the content')
@@ -121,18 +123,18 @@ const ViewProfile = () => {
         }
     }
 
-    const handleCancelReq = async() =>{
-        try{
+    const handleCancelReq = async () => {
+        try {
             const data = await cancelAccessReq(selectedTeacher);
             setStatus('');
             // console.log('Deleted_data',data);
             closeref.current.click();
-        } catch(error){
-            console.log('Error in fetching handleCancelReq',error);
+        } catch (error) {
+            console.log('Error in fetching handleCancelReq', error);
         }
     }
 
-    const handleGoBack = () =>{
+    const handleGoBack = () => {
         navigate('/Stmaterials')
     }
 
@@ -159,7 +161,7 @@ const ViewProfile = () => {
                 </div>
             </div>
 
-            <StNavbar/>
+            <StNavbar />
             <div className="Hero" style={{ display: 'flex' }}>
                 <div className="first" style={first_styles}>
                     <div className="Profile_heading" style={{ backgroundColor: '#21A0A0', position: 'fixed', color: 'white', marginLeft: '1rem', width: '43vw', height: '3rem', textAlign: 'center', fontWeight: 'bold', fontSize: '1.7rem', borderRight: '5px solid white' }}>
@@ -185,13 +187,17 @@ const ViewProfile = () => {
                     </div>
                 </div>
 
-                <div className="second" style={{ borderLeft: '4px solid #21A0A0', overflow: 'hidden', height: '100vh', width: '55%', position: 'fixed', top: '0.5rem', right: '0' }}>
+                <div className="second" style={{
+                    borderLeft: '4px solid #21A0A0', overflow: 'hidden',
+                    height: '100vh',
+                    width: '55%', position: 'fixed', top: '0.5rem', right: '0'
+                }}>
                     <div className="second_heading" style={{ height: '3rem', fontSize: '1.7rem', color: 'white', fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '0.5rem', marginLeft: '0.5rem', marginTop: '5rem', backgroundColor: '#21A0A0' }}>
                         <p style={{ marginTop: '0.7rem' }}>Materials</p>
                     </div>
 
-                    {status === 'approved'?(loading ? (
-                        <div style={{ marginLeft: '13rem',backgroundColor:'#D0F4EA',height:'17vh', width: '20rem', justifyContent: 'center', marginTop: '14rem', alignItems: 'center', display: 'flex', flexDirection: 'column' }} className="spinner">
+                    {status === 'approved' ? (loading ? (
+                        <div style={{ marginLeft: '13rem', backgroundColor: '#D0F4EA', height: '17vh', width: '20rem', justifyContent: 'center', marginTop: '14rem', alignItems: 'center', display: 'flex', flexDirection: 'column' }} className="spinner">
                             <div className="clipLoader">
                                 <ClipLoader color="black" loading={loading} size={30} />
                             </div>
@@ -201,18 +207,18 @@ const ViewProfile = () => {
                             </div>
                         </div>) : (<div className="getting_content" style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 10rem)', marginTop: '1rem' }}>
                             {memoizedSTItems}
-                        </div>)):(<div className="accessReq" style={{ padding:'1rem',marginTop: '8rem',height:'35vh',width:'35vw',marginLeft:'10rem',paddingTop:'1.5rem',backgroundColor:'#D0F4EA'}}>
-                        <div className="noAccessimg" style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img style={{ height: '8rem', width: '8rem' }} src={noAccessimg}></img>
-                        </div>
-                        <div className="text" style={{ display: 'flex', fontSize: '1.5rem', fontWeight: 'bold', justifyContent: 'center' }}>
-                            <p>Content Access Denied</p>
-                        </div>
-                        <div className="btn_access" style={{ display: 'flex', gap: '1rem', height: '2.5rem', fontSize: '1.1rem', fontWeight: 'bold', justifyContent: 'center' }}>
-                            <p style={{ marginTop: '0.3rem' }}>{gpy}</p>
-                            <button onClick={handleAccessReq} type="button" className={`btn btn-${colorSReq}`}>{sReqtext}</button>
-                        </div>
-                    </div>)}
+                        </div>)) : (<div className="accessReq" style={{ padding: '1rem', marginTop: '8rem', height: '35vh', width: '35vw', marginLeft: '10rem', paddingTop: '1.5rem', backgroundColor: '#D0F4EA' }}>
+                            <div className="noAccessimg" style={{ display: 'flex', justifyContent: 'center' }}>
+                                <img style={{ height: '8rem', width: '8rem' }} src={noAccessimg}></img>
+                            </div>
+                            <div className="text" style={{ display: 'flex', fontSize: '1.5rem', fontWeight: 'bold', justifyContent: 'center' }}>
+                                <p>Content Access Denied</p>
+                            </div>
+                            <div className="btn_access" style={{ display: 'flex', gap: '1rem', height: '2.5rem', fontSize: '1.1rem', fontWeight: 'bold', justifyContent: 'center' }}>
+                                <p style={{ marginTop: '0.3rem' }}>{gpy}</p>
+                                <button onClick={handleAccessReq} type="button" className={`btn btn-${colorSReq}`}>{sReqtext}</button>
+                            </div>
+                        </div>)}
 
                     {/* <div className="accessReq" style={{ marginTop: '8rem' }}>
                         <div className="noAccessimg" style={{ display: 'flex', justifyContent: 'center' }}>

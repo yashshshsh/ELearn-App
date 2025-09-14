@@ -2,7 +2,7 @@ import React from 'react'
 
 const Webname = () => {
     const webName_styles = {
-        height: "13vh", width: '100vw', backgroundColor: "#FCFFF7", color: "black", fontSize: '3rem',
+        height: "13vh", backgroundColor: "#FCFFF7", color: "black", fontSize: '3rem',
         display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold'
     }
     return (
